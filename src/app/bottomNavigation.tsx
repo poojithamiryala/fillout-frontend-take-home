@@ -91,7 +91,7 @@ export default function BottomNavigation({ tabs, setTabs, activeId, setActiveId 
             onDragEnd={handleDragEnd}
         >
             <SortableContext items={tabs.map(tab => tab.id)} strategy={horizontalListSortingStrategy}>
-                <div className="flex bg-white h-12 items-center overflow-auto">
+                <div className="flex bg-white h-12 items-center overflow-auto px-2">
                     {tabs.map((tab, index) => (
                         <div key={tab.id} className="flex items-center">
                             <SortableTab
