@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+:root {
+  
+
+  --text-color-default: #677289;
+  --text-color-focus: #1A1A1A;
+  --text-color-active: #1A1A1A;
+
+  --bg-default: #9DA4B226;
+  --bg-active: white;
+  --bg-focus: white;
+  --bg-hover: #9DA4B259;
+
+
+  --border-color : #E1E1E1;
+  --active-icon-color: #F59D0E;
+}
+
+
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
