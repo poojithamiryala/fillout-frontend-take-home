@@ -98,7 +98,7 @@ export default function BottomNavigation({ tabs, setTabs, activeId, setActiveId 
                                 tab={tab}
                                 isActive={activeId === tab.id}
                                 onSelect={() => setActiveId(tab.id)}
-                                onOpenContextMenu={(e, id) => openContextMenu(e, index)}
+                                onOpenContextMenu={(e) => openContextMenu(e, index)}
                             />
                             <div className={`relative flex flex-row ${index !== tabs.length - 1 ? 'cursor-pointer' : ''} p-1 items-center group`}>
                                 <div className="h-0 w-8 border-dashed border-[#C0C0C0] border" />
@@ -322,7 +322,7 @@ function SortableTab({ tab, isActive, onSelect, onOpenContextMenu }: TabProps) {
             {tab.name}
             <button
                 aria-label="Open context menu"
-                onClick={(e) => onOpenContextMenu(e, tab.id)}
+                onClick={(e) => onOpenContextMenu(e)}
                 className={`rounded hover:bg-gray-200 focus:outline-none ${isActive && !isDragging ? 'visible' : 'invisible'} `}
                 type="button"
             >

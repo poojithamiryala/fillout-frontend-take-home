@@ -59,7 +59,7 @@ function PlusIcon({ strokeColor = 'black', ...props }: PlusIconProps) {
         <svg width="8" height="8" viewBox="0 0 8 8" fill="none" {...props}>
             <path
                 d="M4 1.167V4M4 4V6.833M4 4H1.167M4 4H6.833"
-                stroke="black"
+                stroke={strokeColor}
                 strokeLinecap="round"
                 strokeLinejoin="round"
             />

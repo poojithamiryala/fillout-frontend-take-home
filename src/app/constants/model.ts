@@ -3,7 +3,7 @@ export interface TabProps {
     tab: TabData,
     isActive: boolean,
     onSelect: () => void,
-    onOpenContextMenu: (e: any, id: TabData['id']) => void
+    onOpenContextMenu: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 export type IconName = 'file' | 'infoClock' | 'plus' | 'checkCircle';
 

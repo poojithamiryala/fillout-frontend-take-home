@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import BottomNavigation from "./bottomNavigation";
 import { bottomNavigationTabs } from "./constants/constants";
 import { useState } from "react";
