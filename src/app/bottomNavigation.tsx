@@ -58,7 +58,7 @@ export default function BottomNavigation({ tabs, setTabs, activeId, setActiveId 
         if (!trimmedName || tabs.some(tab => tab.name.toLowerCase() === trimmedName.toLowerCase())) return;
 
         const newTabs = [...tabs];
-        newTabs.splice(additionalProps.current.nextTo ?? newTabs.length, 0, {
+        newTabs.splice(((additionalProps.current.nextTo) ?? newTabs.length - 1) + 1, 0, {
             id: newFormName,
             name: newFormName,
             icon: 'file'
@@ -70,16 +70,16 @@ export default function BottomNavigation({ tabs, setTabs, activeId, setActiveId 
     };
 
     // Inside BottomNavigation, add these states:
-    const [contextMenuTabId, setContextMenuTabId] = useState<string | null>(null);
+    const [contextMenuTabId, setContextMenuTabId] = useState<number | null>(null);
     const [contextMenuPos, setContextMenuPos] = useState<{ x: number; y: number } | null>(null);
 
     // Function to open context menu near the kebab icon
-    const openContextMenu = (event: React.MouseEvent, tabId: string) => {
+    const openContextMenu = (event: React.MouseEvent, index: number) => {
         event.preventDefault();
         event.stopPropagation(); // stop event bubbling (avoid triggering other clicks)
 
         const rect = (event.target as HTMLElement).getBoundingClientRect();
-        setContextMenuTabId(tabId);
+        setContextMenuTabId(index);
         // position the menu slightly below and to the right of the icon
         setContextMenuPos({ x: rect.right - 4, y: rect.top });
     };
@@ -91,14 +91,14 @@ export default function BottomNavigation({ tabs, setTabs, activeId, setActiveId 
             onDragEnd={handleDragEnd}
         >
             <SortableContext items={tabs.map(tab => tab.id)} strategy={horizontalListSortingStrategy}>
-                <div className="flex bg-white h-12 items-center">
+                <div className="flex bg-white h-12 items-center overflow-auto">
                     {tabs.map((tab, index) => (
                         <div key={tab.id} className="flex items-center">
                             <SortableTab
                                 tab={tab}
                                 isActive={activeId === tab.id}
                                 onSelect={() => setActiveId(tab.id)}
-                                onOpenContextMenu={openContextMenu}
+                                onOpenContextMenu={(e, id) => openContextMenu(e, index)}
                             />
                             <div className={`relative flex flex-row ${index !== tabs.length - 1 ? 'cursor-pointer' : ''} p-1 items-center group`}>
                                 <div className="h-0 w-8 border-dashed border-[#C0C0C0] border" />
@@ -212,7 +212,7 @@ export default function BottomNavigation({ tabs, setTabs, activeId, setActiveId 
                     setContextMenuPos(null);
                 }}
                 items={[
-                    {
+                    ...(contextMenuTabId !== 0 ? [{
                         label: <div className="flex flex-row gap-2">
                             <svg width="11" height="14" viewBox="0 0 11 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M5.19702 9.48968C3.80363 9.10058 2.55415 8.80158 1.16666 9.37702V13.1664C1.16666 13.4425 0.942799 13.6664 0.666656 13.6664C0.390514 13.6664 0.166656 13.4425 0.166656 13.1664V1.93248C0.166656 1.49723 0.414411 1.062 0.861621 0.884636C2.51915 0.227256 4.00994 0.585905 5.34893 0.956919C5.43675 0.981251 5.5238 1.00557 5.61016 1.0297C6.87557 1.38323 7.99341 1.69554 9.20948 1.40086C9.92454 1.22758 10.8333 1.69562 10.8333 2.59117V8.64105C10.8333 9.0763 10.5856 9.51153 10.1384 9.68889C8.3824 10.3853 6.80248 9.94102 5.39759 9.54595C5.33033 9.52703 5.26347 9.50823 5.19702 9.48968Z" fill="#2F72E2" />
@@ -220,9 +220,9 @@ export default function BottomNavigation({ tabs, setTabs, activeId, setActiveId 
                             Set as first page
                         </div>,
                         onClick: () => {
-                            alert(`Set as first page: ${contextMenuTabId}`);
+                            alert(`Set as first page`);
                         },
-                    },
+                    }] : []),
                     {
                         label: <div className="flex flex-row gap-2">
                             <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -231,7 +231,7 @@ export default function BottomNavigation({ tabs, setTabs, activeId, setActiveId 
                             Rename
                         </div>,
                         onClick: () => {
-                            alert(`Rename tab: ${contextMenuTabId}`);
+                            alert(`Rename tab`);
                         },
                     },
                     {
@@ -242,7 +242,7 @@ export default function BottomNavigation({ tabs, setTabs, activeId, setActiveId 
                             Copy
                         </div>,
                         onClick: () => {
-                            alert(`Copy tab: ${contextMenuTabId}`);
+                            alert(`Copy tab`);
                         },
                     },
                     {
@@ -253,7 +253,7 @@ export default function BottomNavigation({ tabs, setTabs, activeId, setActiveId 
                             Duplicate
                         </div>,
                         onClick: () => {
-                            alert(`Duplicate tab: ${contextMenuTabId}`);
+                            alert(`Duplicate tab`);
                         },
                     },
                     {
@@ -264,7 +264,7 @@ export default function BottomNavigation({ tabs, setTabs, activeId, setActiveId 
                             Delete
                         </div>,
                         onClick: () => {
-                            alert(`Delete tab: ${contextMenuTabId}`);
+                            alert(`Delete tab`);
                         },
                         className: "text-red-500 border-t border-red-200",
                     },

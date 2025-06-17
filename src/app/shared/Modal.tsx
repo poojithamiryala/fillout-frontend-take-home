@@ -45,7 +45,7 @@ export default function Modal({ isOpen, onClose, title, children, footer }: Moda
             role="dialog"
             aria-modal="true"
             onMouseDown={handleBackdropClick}
-            className={`fixed inset-0 flex items-center justify-center bg-black/20 transition-opacity duration-300 ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+            className={`fixed inset-0 z-1000 flex items-center justify-center bg-black/20 transition-opacity duration-300 ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
                 }`}
         >
             <div
